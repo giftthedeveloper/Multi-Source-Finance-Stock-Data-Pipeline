@@ -216,3 +216,14 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Airflow
+logs/
+
+# dbt
+stocks_pipeline/target/
+stocks_pipeline/dbt_packages/
+stocks_pipeline/logs/
+
+# dbt sample project
+jaffle_shop/
