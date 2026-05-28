@@ -1,0 +1,33 @@
+version: 2
+
+models:
+  - name: stg_stocks
+    description: "Cleaned and filtered stock closing prices from yfinance"
+    columns:
+      - name: date
+        description: "Date of the stock price"
+        tests:
+          - not_null
+      - name: ticker
+        description: "Stock ticker symbol"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['MSFT', 'AAPL', 'GOOG']
+      - name: close_price
+        description: "Closing price of the stock in USD"
+        tests:
+          - not_null
+
+  - name: stg_fx_rates
+    description: "Cleaned foreign exchange rates relative to USD"
+    columns:
+      - name: currency
+        description: "Currency code (e.g., NGN, EUR, GBP)"
+        tests:
+          - not_null
+          - unique
+      - name: fx_rate
+        description: "Exchange rate value against USD"
+        tests:
+          - not_null

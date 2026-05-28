@@ -1,15 +1,26 @@
 version: 2
+
 models:
   - name: mart_stock_naira_prices
-    description: "Final mart model that provides stock prices converted to Nigerian Naira (NGN)"
+    description: "Final mart model with stock closing prices in USD and NGN with daily percentage change"
     columns:
-        - name: ticker
-          description: "Stock ticker symbol"
-        - name: date
-          description: "Date of the stock price"
-        - name: usd_price
-          description: "Closing price of the stock in USD"
-        - name: ngn_price
-          description: "Closing price converted to Nigerian Naira"
-        - name: pct_daily_change
-          description: "Percentage daily change in stock price"
+      - name: ticker
+        description: "Stock ticker symbol"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['MSFT', 'AAPL', 'GOOG']
+      - name: date
+        description: "Date of the stock price"
+        tests:
+          - not_null
+      - name: usd_price
+        description: "Closing price of the stock in USD"
+        tests:
+          - not_null
+      - name: ngn_price
+        description: "Closing price converted to Nigerian Naira using the NGN/USD FX rate"
+        tests:
+          - not_null
+      - name: pct_daily_change
+        description: "Percentage daily change in stock price. NULL for the first trading day per ticker"
