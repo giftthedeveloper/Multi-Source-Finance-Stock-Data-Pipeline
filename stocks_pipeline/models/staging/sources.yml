@@ -1,0 +1,21 @@
+version: 2
+sources:
+  - name: stocks
+    schema: public
+    tables:
+      - name: raw_stocks
+        description: "Raw stock price data ingested from yfinance"
+        columns:
+          - name: date
+            description: "Date of the stock price"
+          - name: ticker
+            description: "Stock ticker symbol"
+          - name: close_price
+            description: "Closing price of the stock in USD"
+      - name: raw_fx_rates
+        description: "Raw foreign exchange rates data ingested from API"
+        columns:
+          - name: currency
+            description: "Currency code (e.g., EUR, GBP, JPY)"
+          - name: value
+            description: "Exchange rate value against USD"

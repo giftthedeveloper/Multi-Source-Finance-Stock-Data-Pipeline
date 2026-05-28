@@ -1,0 +1,15 @@
+version: 2
+models:
+  - name: mart_stock_naira_prices
+    description: "Final mart model that provides stock prices converted to Nigerian Naira (NGN)"
+    columns:
+        - name: ticker
+          description: "Stock ticker symbol"
+        - name: date
+          description: "Date of the stock price"
+        - name: usd_price
+          description: "Closing price of the stock in USD"
+        - name: ngn_price
+          description: "Closing price converted to Nigerian Naira"
+        - name: pct_daily_change
+          description: "Percentage daily change in stock price"

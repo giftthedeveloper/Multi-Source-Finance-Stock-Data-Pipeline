@@ -1,0 +1,15 @@
+version: 2
+models:
+  - name: int_stocks_with_fx
+    description: "Intermediate model that combines stock prices with FX rates for currency conversion"
+    columns:
+      - name: date
+        description: "Date of the stock price"
+      - name: ticker
+        description: "Stock ticker symbol"
+      - name: close_price_usd
+        description: "Closing price of the stock in USD"
+      - name: currency
+        description: "Currency code (e.g., EUR, GBP, JPY)"
+      - name: close_price_converted
+        description: "Closing price converted to the target currency using FX rate"
