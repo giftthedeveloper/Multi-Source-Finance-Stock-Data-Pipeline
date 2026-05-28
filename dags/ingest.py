@@ -11,6 +11,16 @@ DB_URL = os.getenv(
 
 exchange_rate_api_url="https://open.er-api.com/v6/latest/USD"
 
+def check_db_connection():
+    try:
+        engine = create_engine(DB_URL)
+        with engine.connect() as conn:
+            conn.execute("SELECT 1")
+        print("DB connection successful")
+    except Exception as e:
+        raise Exception(f"DB connection failed: {e}")
+
+
 def fetch_stock_data():
     df = yf.download(['MSFT', 'AAPL', 'GOOG'], period='1mo')
     df = df['Close'].reset_index()
@@ -25,10 +35,10 @@ def fetch_stock_data():
     return df
 
 
-def load_data_to_postgres(ti,table_name, fetch_task_id):
+def load_data_to_postgres(ti, table_name, fetch_task_id):
     df = ti.xcom_pull(task_ids=fetch_task_id)
     engine = create_engine(DB_URL)
-    df.to_sql(table_name, engine, if_exists='replace', index=False)
+    df.to_sql(table_name, engine, if_exists='append', index=False)
 
 
 def fetch_fx_rates():

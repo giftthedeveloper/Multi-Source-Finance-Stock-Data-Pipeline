@@ -2,7 +2,7 @@ from airflow import DAG
 from airflow.operators.python import PythonOperator
 from airflow.operators.bash import BashOperator
 from datetime import datetime
-from ingest import fetch_fx_rates, load_data_to_postgres, fetch_stock_data
+from ingest import fetch_fx_rates, load_data_to_postgres, fetch_stock_data, check_db_connection
 
 
 with DAG(
@@ -12,6 +12,11 @@ with DAG(
     catchup=False,
 ) as dag:
   
+  check_db = PythonOperator(
+    task_id='check_db_connection',
+    python_callable=check_db_connection
+  )
+
   fetch_stock = PythonOperator(
     task_id='fetch_closing_stock_prices',
     python_callable=fetch_stock_data
@@ -42,9 +47,10 @@ with DAG(
 
   transform = BashOperator(
     task_id='transform_data',
-    bash_command='echo "Transforming data..."' 
+    bash_command='dbt run --project-dir /opt/airflow/stocks_pipeline --profiles-dir /opt/airflow/stocks_pipeline'
   )
 
+  check_db >> [fetch_stock, fetch_fxrates]
   fetch_stock >> load_stock
   fetch_fxrates >> load_fxrates
   [load_stock, load_fxrates] >> transform

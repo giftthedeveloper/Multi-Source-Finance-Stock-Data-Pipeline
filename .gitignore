@@ -224,6 +224,7 @@ logs/
 stocks_pipeline/target/
 stocks_pipeline/dbt_packages/
 stocks_pipeline/logs/
+stocks_pipeline/profiles.yml
 
 # dbt sample project
 jaffle_shop/
